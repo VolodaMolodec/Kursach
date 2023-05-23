@@ -34,6 +34,9 @@
             this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.RenderTimer = new System.Windows.Forms.Timer(this.components);
             this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.A_input = new System.Windows.Forms.TextBox();
+            this.C_input = new System.Windows.Forms.TextBox();
+            this.Z_input = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -86,18 +89,51 @@
             this.comboBox2.FormattingEnabled = true;
             this.comboBox2.Items.AddRange(new object[] {
             "Test",
-            "Цилиндр"});
+            "Цилиндр",
+            "Эллиптический парраболоид",
+            "Конус",
+            "Эллипсоид"});
             this.comboBox2.Location = new System.Drawing.Point(533, 53);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(154, 21);
             this.comboBox2.TabIndex = 3;
             this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
             // 
+            // A_input
+            // 
+            this.A_input.Location = new System.Drawing.Point(533, 96);
+            this.A_input.Name = "A_input";
+            this.A_input.Size = new System.Drawing.Size(100, 20);
+            this.A_input.TabIndex = 4;
+            this.A_input.Text = "5";
+            this.A_input.TextChanged += new System.EventHandler(this.A_input_TextChanged);
+            // 
+            // C_input
+            // 
+            this.C_input.Location = new System.Drawing.Point(533, 122);
+            this.C_input.Name = "C_input";
+            this.C_input.Size = new System.Drawing.Size(100, 20);
+            this.C_input.TabIndex = 5;
+            this.C_input.Text = "1";
+            this.C_input.TextChanged += new System.EventHandler(this.C_input_TextChanged);
+            // 
+            // Z_input
+            // 
+            this.Z_input.Location = new System.Drawing.Point(533, 148);
+            this.Z_input.Name = "Z_input";
+            this.Z_input.Size = new System.Drawing.Size(100, 20);
+            this.Z_input.TabIndex = 6;
+            this.Z_input.Text = "5";
+            this.Z_input.TextChanged += new System.EventHandler(this.Z_input_TextChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(732, 527);
+            this.Controls.Add(this.Z_input);
+            this.Controls.Add(this.C_input);
+            this.Controls.Add(this.A_input);
             this.Controls.Add(this.comboBox2);
             this.Controls.Add(this.trackBar1);
             this.Controls.Add(this.comboBox1);
@@ -118,6 +154,9 @@
         private System.Windows.Forms.TrackBar trackBar1;
         private System.Windows.Forms.Timer RenderTimer;
         private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.TextBox A_input;
+        private System.Windows.Forms.TextBox C_input;
+        private System.Windows.Forms.TextBox Z_input;
     }
 }
 

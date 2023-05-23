@@ -31,6 +31,8 @@ namespace Test
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            A_input.Hide();
+            C_input.Hide();
             // инициализация Glut
             Glut.glutInit();
             Glut.glutInitDisplayMode(Glut.GLUT_RGB | Glut.GLUT_DOUBLE |
@@ -56,10 +58,17 @@ namespace Test
 
         private void calculate_coordinates()
         {
-            int border_z = 5;
-            switch(comboBox2.SelectedIndex)
+            int border_z;
+            if (Z_input.Text == "") border_z = 1;
+            else border_z = int.Parse(Z_input.Text);
+            double a;
+            if (A_input.Text == "") a = 1;
+            else a = double.Parse(A_input.Text);
+            switch (comboBox2.SelectedIndex)
             {
                 case 0:
+                    A_input.Hide();
+                    C_input.Hide();
                     GeometricArray = new double[64, 3];
                     ResaultGeometric = new double[64, 64, 3];
                     Iter = 64;
@@ -106,25 +115,76 @@ namespace Test
                     //тело вращения
                     break;
                 case 1:
-                    GeometricArray = new double[border_z * 2 + 4,3];
-                    ResaultGeometric = new double[border_z * 2 + 4, 64, 3];
-                    Iter = 64;
+                    A_input.Show();
+                    C_input.Hide();
+                    Iter = 128;
+                    
+                    GeometricArray = new double[5,3];
+                    Angle = 2 * Math.PI / Iter;
+                    ResaultGeometric = new double[5, Iter, 3];
+                    
                     GeometricArray[0, 0] = 0;
                     GeometricArray[0, 1] = 0;
-                    GeometricArray[0, 2] = -5;
-                    for (int z = -5; z <= border_z; z++)
+                    GeometricArray[0, 2] = -border_z;
+                    GeometricArray[1, 0] = a;
+                    GeometricArray[1, 1] = 0;
+                    GeometricArray[1, 2] = -border_z;
+                    GeometricArray[2, 0] = a;
+                    GeometricArray[2, 1] = 0;
+                    GeometricArray[2, 2] = border_z;
+                    GeometricArray[3, 0] = 0;
+                    GeometricArray[3, 1] = 0;
+                    GeometricArray[3, 2] = border_z;
+                    count_elements = 4;
+                    break;
+                case 2:
+                    A_input.Show();
+                    C_input.Hide();
+                    GeometricArray = new double[(int)(border_z * 2) + 5, 3];
+                    ResaultGeometric = new double[(int)(border_z * 2) + 5, 64, 3];
+                    Iter = 64;
+                    
+                    Angle = 2 * Math.PI / 64;
+                    GeometricArray[0, 0] = 0;
+                    GeometricArray[0, 1] = 0;
+                    GeometricArray[0, 2] = 0;
+                    for (double z = 0; z < border_z; z+= 0.5)
                     {
-                        GeometricArray[z + border_z + 1, 0] = 5;
-                        GeometricArray[z + border_z + 1, 1] = 0;
-                        GeometricArray[z + border_z + 1, 2] = z;
+                        double x = Math.Sqrt(2 * a * (double)z);
+                        GeometricArray[(int)(z * 2) + 1, 0] = x;
+                        GeometricArray[(int)(z * 2) + 1, 1] = 0;
+                        GeometricArray[(int)(z * 2) + 1, 2] = z;
                     }
-
                     GeometricArray[border_z * 2 + 1, 0] = 0;
                     GeometricArray[border_z * 2 + 1, 1] = 0;
-                    GeometricArray[border_z * 2 + 1, 2] = 4;
-                    count_elements = border_z * 2 + 3;
+                    GeometricArray[border_z * 2 + 1, 2] = border_z - 0.5;
+                    count_elements = (int)(border_z * 2) + 2;
                     break;
-
+                case 3:
+                    A_input.Show();
+                    C_input.Hide();
+                    GeometricArray = new double[5, 3];
+                    ResaultGeometric = new double[5, 64, 3];
+                    Iter = 64;
+                    Angle = 2 * Math.PI / 64;
+                    GeometricArray[0, 0] = 0; GeometricArray[0, 1] = 0; GeometricArray[0, 2] = 0;
+                    GeometricArray[1, 0] = border_z * a; GeometricArray[1, 1] = 0; GeometricArray[1, 2] = border_z;
+                    GeometricArray[2, 0] = 0; GeometricArray[2, 1] = 0; GeometricArray[2, 2] = border_z;
+                    count_elements = 3;
+                    break;
+                case 4:
+                    A_input.Show();
+                    C_input.Show();
+                    GeometricArray = new double[border_z * 2 + 4, 3];
+                    ResaultGeometric = new double[border_z * 2 + 4, 64, 3];
+                    Iter = 64;
+                    Angle = 2 * Math.PI / 64;
+                    for(int z = -border_z; z <= border_z; z++)
+                    {
+                        GeometricArray[z + border_z, 0] = a * Math.Sqrt(1 - Math.Pow(z,2) / Math.Pow(border_z,2)); GeometricArray[z + border_z, 1] = 0; GeometricArray[z + border_z, 2] = z;
+                    }
+                    count_elements = border_z * 2 + 1;
+                    break;
             }
 
             for (int ax = 0; ax < count_elements; ax++)
@@ -159,6 +219,21 @@ namespace Test
         }
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            calculate_coordinates();
+        }
+
+        private void A_input_TextChanged(object sender, EventArgs e)
+        {
+            calculate_coordinates();
+        }
+
+        private void C_input_TextChanged(object sender, EventArgs e)
+        {
+            calculate_coordinates();
+        }
+
+        private void Z_input_TextChanged(object sender, EventArgs e)
         {
             calculate_coordinates();
         }
